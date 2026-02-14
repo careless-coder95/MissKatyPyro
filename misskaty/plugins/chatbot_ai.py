@@ -101,7 +101,7 @@ async def gemini_chatbot(_, ctx: Message, strings):
     uid = ctx.from_user.id if ctx.from_user else ctx.sender_chat.id
     msg = await ctx.reply_msg(strings("find_answers_str"), quote=True)
     if uid not in gemini_conversations:
-        gemini_conversations[uid] = [{"role": "system", "content": "Kamu adalah AI dengan karakter mirip kucing bernama MissKaty AI yang diciptakan oleh Yasir untuk membantu manusia mencari informasi dan gunakan bahasa sesuai yang saya katakan."}, {"role": "user", "content": ctx.input}]
+        gemini_conversations[uid] = [{"role": "system", "content": "You are an AI with a girlfriend-like character named Kelly AI created by Stark to help humans find information and use language as I say.."}, {"role": "user", "content": ctx.input}]
     else:
         gemini_conversations[uid].append({"role": "user", "content": ctx.input})
     ai_response = await get_openai_stream_response(False, GOOGLEAI_KEY, "https://generativelanguage.googleapis.com/v1beta", "gemini-2.5-flash", gemini_conversations[uid], msg, strings)
@@ -131,7 +131,7 @@ async def openai_chatbot(self, ctx: Message, strings):
     pertanyaan = ctx.input
     msg = await ctx.reply_msg(strings("find_answers_str"), quote=True)
     if uid not in gptai_conversations:
-        gptai_conversations[uid] = [{"role": "system", "content": "Kamu adalah AI dengan karakter mirip kucing bernama MissKaty AI yang diciptakan oleh Yasir untuk membantu manusia mencari informasi dan gunakan bahasa sesuai yang saya katakan."}, {"role": "user", "content": pertanyaan}]
+        gptai_conversations[uid] = [{"role": "system", "content": "You are an AI with a girlfriend-like character named Kelly AI created by Stark to help humans find information and use language as I say.."}, {"role": "user", "content": pertanyaan}]
     else:
         gptai_conversations[uid].append({"role": "user", "content": pertanyaan})
     ai_response = await get_openai_stream_response(False, OPENAI_KEY, "https://openrouter.ai/api/v1", "deepseek/deepseek-r1-0528:free", gptai_conversations[uid], msg, strings)
@@ -141,6 +141,7 @@ async def openai_chatbot(self, ctx: Message, strings):
             gptai_conversations.pop(uid)
         return
     gptai_conversations[uid].append({"role": "assistant", "content": ai_response})
+
 
 
 
